@@ -24,6 +24,8 @@ namespace Beolvasas
         public int SorFogyasztasEvente {  get; set; }
         public int KrumpliFogyasztasEvente { get; set; }
 
+        public int Kor => (int)DateTime.Now.Year - SzuletesiEv; 
+
         public Allampolgar(string sor) {
             var temp = sor.Split(';');
             Id = int.Parse(temp[0]);
@@ -45,7 +47,7 @@ namespace Beolvasas
 
         public override string ToString()
         {
-            return $"{Id} {Nem} {SzuletesiEv} {Suly} {Magassag} {(Dohanyzik ? "igen" : "nem")} {Nemzetiseg} {Nepcsoport} {Tartomany} {NettoJovedelem} {PolitikaiNezet} {(AktivSzavazo ? "igen" : "nem")} {SorFogyasztasEvente} {KrumpliFogyasztasEvente}";
+            return $"{Id}\t{Nem}\t{SzuletesiEv}\t{Suly}\t{Magassag}\t{(Dohanyzik ? "igen" : "nem")}\t{Nemzetiseg}\t{Nepcsoport}\t{Tartomany}\t{NettoJovedelem}\t{PolitikaiNezet}\t{(AktivSzavazo ? "igen" : "nem")}\t{SorFogyasztasEvente}\t{KrumpliFogyasztasEvente}";
         }
     }
 }

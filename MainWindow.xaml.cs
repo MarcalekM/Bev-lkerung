@@ -27,8 +27,8 @@ namespace Beolvasas
             _ = sr.ReadLine();
             while (!sr.EndOfStream) Lakossag.Add(new(sr.ReadLine()));
 
-            DB.Text = Lakossag.Count.ToString();
-            ElsoSor.Text = Lakossag[0].ToString();
+            for (int i = 1; i <= 40; i++) Sorszam.Items.Add(i + ".");
+            foreach (var lakos in Lakossag) MegoldasTeljes.Items.Add(lakos);
         }
     }
 }
