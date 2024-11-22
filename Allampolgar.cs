@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Beolvasas
 {
@@ -23,8 +24,9 @@ namespace Beolvasas
         public bool AktivSzavazo { get; set; }
         public int SorFogyasztasEvente {  get; set; }
         public int KrumpliFogyasztasEvente { get; set; }
-
+        public double HaviNettoJovedelem => NettoJovedelem / 12;
         public int Kor => (int)DateTime.Now.Year - SzuletesiEv; 
+
 
         public Allampolgar(string sor) {
             var temp = sor.Split(';');
@@ -45,9 +47,10 @@ namespace Beolvasas
             KrumpliFogyasztasEvente = temp[14] != "NA" ? int.Parse(temp[14]) : 0;
         }
 
-        public override string ToString()
+        public string ToString(bool adatok)
         {
-            return $"{Id}\t{Nem}\t{SzuletesiEv}\t{Suly}\t{Magassag}\t{(Dohanyzik ? "igen" : "nem")}\t{Nemzetiseg}\t{Nepcsoport}\t{Tartomany}\t{NettoJovedelem}\t{PolitikaiNezet}\t{(AktivSzavazo ? "igen" : "nem")}\t{SorFogyasztasEvente}\t{KrumpliFogyasztasEvente}";
+            if(adatok)return $"{Id}\t{Nem}\t{SzuletesiEv}\t{Suly}\t{Magassag}";
+            else return $"{Id}\t{Nemzetiseg}\t{Nepcsoport}\t{Tartomany}\t{NettoJovedelem}";
         }
     }
 }
