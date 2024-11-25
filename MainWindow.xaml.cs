@@ -131,35 +131,51 @@ namespace Beolvasas
 
         public void Feladat9()
         {
-
+            var feladat = Lakossag.Where(l => l.Nem.Equals("nő") && l.Tartomany.Equals("Bajorország"));
+            foreach (var f in feladat) MegoldasLista.Items.Add(f.ToString(false));
         }
         public void Feladat10()
         {
-
+            var feladat = Lakossag.Where(l => !l.Dohanyzik).OrderBy(l => l.NettoJovedelem).ToList();
+            for (int i = 0; i < 10; i++) MegoldasLista.Items.Add(feladat[i].ToString(true));
         }
         public void Feladat11()
         {
-
+            var feladat = Lakossag.OrderByDescending(l => l.Kor).ToList();
+            for (int i = 0; i < 5; i++) MegoldasTeljes.Items.Add(feladat[i]);
         }
         public void Feladat12()
         {
-
+            var feladat = Lakossag.Where(l => l.Nemzetiseg.Equals("német")).OrderBy(l => l.Tartomany).DistinctBy(l => l.Tartomany);
+            foreach (var fel in feladat)
+            {
+                MegoldasLista.Items.Add(fel.Tartomany);
+                var temp = feladat.Where(f => f.Tartomany.Equals(fel.Tartomany)).ToList();
+                foreach (var f in temp) MegoldasLista.Items.Add(f.Id + " - " + (f.AktivSzavazo ? "aktív szavazó" : "nem aktív szavazó"));
+            }
+            
         }
         public void Feladat13()
         {
-
+            var feladat = Lakossag.Where(l => l.Nem.Equals("férfi")).Average(l => l.SorFogyasztasEvente);
+            MegoldasMondatos.Content = $"A férfiak átlag sörfogyasztása évente: {feladat:0} liter";
         }
         public void Feladat14()
         {
-
+            var feladat = Lakossag.OrderBy(l => l.IskolaiVegzettseg).ToList();
+            foreach (var f in feladat) MegoldasTeljes.Items.Add(f);
         }
         public void Feladat15()
         {
-
+            var feladat = Lakossag.OrderByDescending(l => l.NettoJovedelem).ToList();
+            for (int i = 0; i < 3; i++) MegoldasLista.Items.Add(feladat[i].ToString(false));
+            feladat.Reverse();
+            for (int i = 0; i < 3; i++) MegoldasLista.Items.Add(feladat[i].ToString(false));
         }
         public void Feladat16()
         {
-
+            var feladat = Lakossag.Where(l => l.AktivSzavazo).Count();
+            MegoldasMondatos.Content = $"A lakosság {feladat:0.00}%-a aktív szaavazó";
         }
         public void Feladat17()
         {
