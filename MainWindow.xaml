@@ -9,7 +9,7 @@
     <Grid>
         <ComboBox x:Name="Sorszam" HorizontalAlignment="Left" Margin="32,39,0,0" VerticalAlignment="Top" Width="45" SelectionChanged="Sorszam_SelectionChanged"/>
         <Label x:Name="Megoldas" Content="feladat egy mondatos megoldása:" HorizontalAlignment="Left" Margin="82,37,0,0" VerticalAlignment="Top" Width="190"/>
-        <Label x:Name="MegoldasMondatos" Content="" HorizontalAlignment="Left" Margin="277,37,0,0" VerticalAlignment="Top" Width="417"/>
+        <Label x:Name="MegoldasMondatos" Content="" HorizontalAlignment="Left" Margin="277,37,0,0" VerticalAlignment="Top" Width="989"/>
         <DataGrid x:Name="MegoldasTeljes" Margin="32,109,34,315" Height="310" Width="auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
