@@ -203,7 +203,20 @@ namespace Beolvasas
         }
         public void Feladat19()
         {
-            
+            List<string> tartomanyok = new();
+            var feladat = Lakossag.DistinctBy(l => l.Tartomany);
+            foreach (var f in feladat) tartomanyok.Add(f.Tartomany);
+            string tartomany = string.Empty;
+            double max = 0;
+            for (int i = 0; i < tartomanyok.Count; i++)
+            {
+                if(max < Lakossag.Where(l => l.Tartomany.Equals(tartomanyok[i])).Average(l => l.NettoJovedelem))
+                {
+                    max = Lakossag.Where(l => l.Tartomany.Equals(tartomanyok[i])).Average(l => l.NettoJovedelem);
+                    tartomany = tartomanyok[i];
+                }
+            }
+            MegoldasMondatos.Content = $"{tartomany} - {max}";
         }
         public void Feladat20()
         {
@@ -246,7 +259,17 @@ namespace Beolvasas
 
         public void Feladat26()
         {
-            
+            List<string> tartomanyok = new();
+            var feladat = Lakossag.DistinctBy(l => l.Tartomany);
+            foreach (var f in feladat) tartomanyok.Add(f.Tartomany);
+            string tartomany = string.Empty;
+            double atlagEletkor = 0;
+            for (var i = 0; i < tartomanyok.Count; i++) 
+            {
+                atlagEletkor = Lakossag.Where(l => l.Tartomany.Equals(tartomanyok[i])).Average(l => l.Kor);
+                tartomany = tartomanyok[i];
+                MegoldasLista.Items.Add($"{tartomany} - {atlagEletkor:0}");
+            }
         }
 
         public void Feladat27()
@@ -265,7 +288,19 @@ namespace Beolvasas
 
         public void Feladat29()
         {
-
+            List<string> tartomanyok = new();
+            var feladat = Lakossag.DistinctBy(l => l.Tartomany);
+            foreach (var f in feladat) tartomanyok.Add(f.Tartomany);
+            string tartomany = string.Empty;
+            double max= 0;
+            int id = 0;
+            for (int i = 0; i < tartomanyok.Count; i++)
+            {
+                tartomany = tartomanyok[i];
+                max = Lakossag.Where(l => l.Tartomany.Equals(tartomanyok[i])).MaxBy(l => l.SorFogyasztasEvente).SorFogyasztasEvente;
+                id = Lakossag.Where(l => l.Tartomany.Equals(tartomanyok[i])).MaxBy(l => l.SorFogyasztasEvente).Id;
+                MegoldasLista.Items.Add($"{tartomany} - {id} - {max}");
+            }
         }
 
         public void Feladat30()
