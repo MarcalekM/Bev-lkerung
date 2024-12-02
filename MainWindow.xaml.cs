@@ -419,6 +419,13 @@ namespace Beolvasas
         {
             var feladat = Lakossag.Where(l => l.Nem.Equals("nő") && l.IskolaiVegzettseg == "Universität" && !l.Nemzetiseg.Equals("bajor")).ToList();
             for (int i = 0; i < 5; i++) MegoldasTeljes.Items.Add(feladat[i]);
+            var feladat2 = Lakossag.Where(l => l.Nem.Equals("nő") && l.Nemzetiseg.Equals("német") && l.NettoJovedelem > feladat.First().NettoJovedelem).ToList();
+            for (int i = 0; i < 3; i++)
+            {
+                var item = feladat[Random.Shared.Next(0, feladat.Count())];
+                MegoldasLista.Items.Add(item.ToString(false));
+                feladat.Remove(item);
+            }
         }
     }
 }
