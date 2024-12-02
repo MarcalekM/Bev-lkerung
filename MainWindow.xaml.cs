@@ -61,8 +61,14 @@ namespace Beolvasas
                 { "35", Feladat35 },
                 { "36", Feladat36 },
                 { "37", Feladat37 },
-                //{ "38", Feladat38 },
-                //{ "39", Feladat39 },
+                { "38", Feladat38 },
+                { "39", Feladat39 },
+                { "40", Feladat40 },
+                { "41", Feladat41 },
+                { "42", Feladat42 },
+                { "43", Feladat43 },
+                { "44", Feladat44 },
+                { "45", Feladat45 }
             };
             using StreamReader sr = new(
                 path: @"../../../src/bevölkerung.txt",
@@ -346,8 +352,73 @@ namespace Beolvasas
 
         public void Feladat37()
         {
+            var feladat = Lakossag.Where(l => l.NettoJovedelem > Lakossag.Average(l => l.NettoJovedelem));
+            MegoldasLista.Items.Add($"A {Lakossag.Average(l => l.NettoJovedelem):0} átlag fizetést meghaladó lakosok száma: {feladat.Count()}");
+            foreach (var f in feladat) MegoldasLista.Items.Add(f.ToString(false));
+        }
+
+        public void Feladat38()
+        {
+            var ferfiDB = Lakossag.Where(l => l.Nem.Equals("férfi")).Count();
+            var noDB = Lakossag.Where(l => l.Nem.Equals("nő")).Count();
+            MegoldasMondatos.Content = $"A férfiak száma {ferfiDB}, a nőké pedig {noDB}";
+        }
+
+        public void Feladat39()
+        {
 
         }
 
+        public void Feladat40()
+        {
+            var nemet = Lakossag.Where(l => l.Nemzetiseg.Equals("német")).Sum(l => l.HaviNettoJovedelem) / Lakossag.Sum(l => l.HaviNettoJovedelem) * 100;
+            var nemNemet = Lakossag.Where(l => !l.Nemzetiseg.Equals("német")).Sum(l => l.HaviNettoJovedelem) / Lakossag.Sum(l => l.HaviNettoJovedelem) * 100;
+            MegoldasMondatos.Content = $"Németek havi jövedelme százalékosan: {nemet:0}%, nem németeké: {nemNemet:0}%";
+        }
+
+        public void Feladat41()
+        {
+            var feladat = Lakossag.Where(l => l.Nemzetiseg.Equals("török")).ToList();
+            for (int i = 0; i < 10; i++)
+            {
+                var item = feladat[Random.Shared.Next(0, feladat.Count())];
+                MegoldasTeljes.Items.Add(item);
+                feladat.Remove(item);
+            }
+        }
+
+        public void Feladat42()
+        {
+            var feladat = Lakossag.Where(l => l.SorFogyasztasEvente > Lakossag.Average(l => l.SorFogyasztasEvente)).ToList();
+            MegoldasLista.Items.Add($"Az átlagos sörfogyasztás évente {Lakossag.Average(l => l.SorFogyasztasEvente):0}");
+            for (int i = 0; i < 5; i++)
+            {
+                var item = feladat[Random.Shared.Next(0, feladat.Count())];
+                MegoldasLista.Items.Add(item.ToString(true));
+                feladat.Remove(item);
+            }
+        }
+
+        public void Feladat43()
+        {
+
+        }
+
+        public void Feladat44()
+        {
+            var feladat = Lakossag.Where(l => l.IskolaiVegzettseg == null).ToList();
+            for (int i = 0; i < 3; i++)
+            {
+                var item = feladat[Random.Shared.Next(0, feladat.Count())];
+                MegoldasTeljes.Items.Add(item);
+                feladat.Remove(item);
+            }
+        }
+
+        public void Feladat45()
+        {
+            var feladat = Lakossag.Where(l => l.Nem.Equals("nő") && l.IskolaiVegzettseg == "Universität" && !l.Nemzetiseg.Equals("bajor")).ToList();
+            for (int i = 0; i < 5; i++) MegoldasTeljes.Items.Add(feladat[i]);
+        }
     }
 }
