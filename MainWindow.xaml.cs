@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -247,7 +247,7 @@ namespace Beolvasas
         }
         public void Feladat23()
         {
-            var feladat = Lakossag.GroupBy(l => l.Nepcsoport).ToDictionary(l => l.Key, l => l.Count()).OrderBy(l => l.Value);
+            var feladat = Lakossag.Where(l => l.Nepcsoport != null).GroupBy(l => l.Nepcsoport).ToDictionary(l => l.Key, l => l.Count());
             MegoldasMondatos.Content = $"A {feladat.First().Key} népcsoportba tartoznak a legtöbben: {feladat.First().Value} fő";
         }
         public void Feladat24()
@@ -325,7 +325,8 @@ namespace Beolvasas
 
         public void Feladat32()
         {
-
+            var feladat = Lakossag.GroupBy(l => l.Tartomany).ToDictionary(l => l.Key, l => l.Count()).OrderBy(l => l.Value);
+            foreach(var f in feladat) MegoldasLista.Items.Add(f.Key);
         }
 
         public void Feladat33()
@@ -342,12 +343,16 @@ namespace Beolvasas
 
         public void Feladat35()
         {
-
+            var feladat = Lakossag.GroupBy(l => l.Tartomany).ToDictionary(l => l.Key, l => l.MinBy(l => l.Kor).Kor);
+            foreach (var f in feladat) MegoldasLista.Items.Add($"{f.Key} - {f.Value}");
         }
 
         public void Feladat36()
         {
-
+            List<string> feladat = new();
+            foreach (var l in Lakossag) feladat.Add($"{l.Nemzetiseg} - {l.Tartomany}");
+            feladat = feladat.Distinct().Order().ToList();
+            foreach(var f in feladat) MegoldasLista.Items.Add(f);
         }
 
         public void Feladat37()
@@ -366,7 +371,8 @@ namespace Beolvasas
 
         public void Feladat39()
         {
-
+            var feladat = Lakossag.GroupBy(l => l.Tartomany).ToDictionary(l => l.Key, l => l.MaxBy(l => l.NettoJovedelem).NettoJovedelem).OrderByDescending(l => l.Value);
+            foreach (var f in feladat) MegoldasLista.Items.Add($"{f.Key} - {f.Value}");
         }
 
         public void Feladat40()
@@ -401,7 +407,10 @@ namespace Beolvasas
 
         public void Feladat43()
         {
-
+            double atlag = Lakossag.Average(l => l.NettoJovedelem);
+            var feladat = Lakossag.GroupBy(l => l.Tartomany).ToDictionary(l => l.Key, l => l.MinBy(l => l.NettoJovedelem).NettoJovedelem).Where(l => l.Value > atlag);
+            MegoldasLista.Items.Add($"Az átlag: { atlag:0.00}");
+            foreach (var f in feladat) MegoldasLista.Items.Add($"{f.Key} - {f.Value}");
         }
 
         public void Feladat44()
